@@ -6,7 +6,7 @@ export default function index() {
   return (
     <View>
       <Text>HomeScreen</Text>
-      <Redirect href={'login'} />
+      <Redirect href={'signin'} />
     </View>
   )
 }
