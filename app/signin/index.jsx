@@ -1,8 +1,12 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import Colors from '../../Constants/Colors';
+import { useRouter } from 'expo-router';
 
 export default function index() {
+  
+  const router = useRouter()
+  
   return (
     <View style = {{
       backgroundColor: Colors.MAIN,
@@ -16,7 +20,7 @@ export default function index() {
       <View style={styles?.headerTextContainer}>
         <Text style={styles?.headerText}>Organise Your Medications Efficiently!</Text>
         <Text style={styles?.subHeaderText}>Stay on track with your health by effortlessly scheduling and monitoring your medication regimen</Text>
-        <TouchableOpacity style={styles?.button}>
+        <TouchableOpacity style={styles?.button} onPress={() => {router.push("signin/login")}}>
           <Text style={styles?.buttonText}>Login / Register</Text>
         </TouchableOpacity>
       </View>
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
   button: {
     padding: 20,
     backgroundColor: Colors.MAIN,
-    borderRadius: 50,
+    borderRadius: 20,
     marginTop: 20,
 
   },
