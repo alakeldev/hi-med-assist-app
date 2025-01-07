@@ -1,8 +1,12 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Colors from '../../Constants/Colors'
+import { useRouter } from 'expo-router'
 
 export default function login() {
+
+  const router = useRouter();
+
   return (
     <View style={styles?.mainContainer}>
       <Text style={styles?.loginMainHeader}>Welcome Back to Your Account</Text>
@@ -22,7 +26,7 @@ export default function login() {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, { backgroundColor: "#ffa500" }]}>
+      <TouchableOpacity style={[styles.button, { backgroundColor: "#ffa500" }]} onPress={() => {router.push("signin/register")}}>
         <Text style={styles.buttonText}>Create Account</Text>
       </TouchableOpacity>
     </View>
@@ -56,7 +60,8 @@ const styles = StyleSheet.create({
       marginTop: 30,
     },
     emailPasswordLabels: {
-      color: Colors.MAIN
+      color: Colors.MAIN,
+      textAlign: "center",
     },
     emailPasswordInputs: {
       borderWidth: 1,
