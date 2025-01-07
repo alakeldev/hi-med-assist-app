@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
-    color: "white",
+    color: Colors.ORANGE,
   },
   subHeaderText: {
     textAlign: "center",

@@ -12,22 +12,22 @@ export default function login() {
       <Text style={styles?.loginMainHeader}>Welcome Back to Your Account</Text>
       <Text style={styles?.loginSecondHeader}>Please login to continue</Text>
 
-      <View style={styles.viewInputs}>
-        <Text style={styles.emailPasswordLabels}>Email</Text>
-        <TextInput placeholder='Email' style={styles.emailPasswordInputs}></TextInput>
+      <View style={styles?.viewInputs}>
+        <Text style={styles?.emailPasswordLabels}>Email</Text>
+        <TextInput placeholder='Email' style={styles?.emailPasswordInputs}></TextInput>
       </View>
 
-      <View style={styles.viewInputs}>
-        <Text style={styles.emailPasswordLabels}>Password</Text>
-        <TextInput placeholder='Password' style={styles.emailPasswordInputs} secureTextEntry={true}></TextInput>
+      <View style={styles?.viewInputs}>
+        <Text style={styles?.emailPasswordLabels}>Password</Text>
+        <TextInput placeholder='Password' style={styles?.emailPasswordInputs} secureTextEntry={true}></TextInput>
       </View>
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Login</Text>
+      <TouchableOpacity style={[styles?.button, { backgroundColor: Colors.ORANGE }]}>
+        <Text style={styles?.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, { backgroundColor: "#ffa500" }]} onPress={() => {router.push("signin/register")}}>
-        <Text style={styles.buttonText}>Create Account</Text>
+      <TouchableOpacity style={styles?.button} onPress={() => {router.push("signin/register")}}>
+        <Text style={styles?.buttonText}>Create Account</Text>
       </TouchableOpacity>
     </View>
   )
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     loginMainHeader: {
         fontSize: 22,
         fontWeight: "bold",
-        color: Colors.MAIN,
+        color: Colors.ORANGE,
         marginTop: 70,
     },
 
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         marginTop: 12,
-        color: Colors.MAIN,
+        color: Colors.ORANGE,
     },
     viewInputs: {
       marginTop: 30,
