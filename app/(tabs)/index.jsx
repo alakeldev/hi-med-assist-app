@@ -1,12 +1,13 @@
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import React from 'react'
-import { Redirect } from 'expo-router'
+import { signOut } from 'firebase/auth'
+import { auth } from '../../FirebaseConfig'
 
 export default function index() {
   return (
     <View>
       <Text>HomeScreen</Text>
-      <Redirect href={'signin'} />
+      <Button title="Logout" onPress={() => signOut(auth)}></Button>
     </View>
   )
 }

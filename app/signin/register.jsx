@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Colors from '../../Constants/Colors';
 import { useRouter } from 'expo-router';
 import { auth } from '../../FirebaseConfig';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import Toast from 'react-native-toast-message';
 import { Checkbox } from 'react-native-paper';
 
@@ -39,6 +39,12 @@ export default function Register() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       showToast('Account created successfully!');
+
+      await updateProfile(user, {
+        displayName: username
+      })
+
+      router.push("(tabs)");
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;

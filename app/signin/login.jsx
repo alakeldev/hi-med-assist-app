@@ -1,11 +1,48 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import Colors from '../../Constants/Colors'
 import { useRouter } from 'expo-router'
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import Toast from 'react-native-toast-message'
 
 export default function login() {
 
   const router = useRouter();
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+  const auth = getAuth();
+  const showToast = (message, type = 'success') => {
+    Toast.show({
+      type: type,
+      position: 'bottom',
+      text1: message,
+      visibilityTime: 3000,
+      autoHide: true,
+    });
+  };
+  const OnLoginClick = async () => {
+
+    if(!email || !password) {
+      showToast('Please Enter your email and password.', 'error');
+      return;
+    }
+    
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      router.replace('/(tabs)');
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if(errorCode === "auth/invalid-credential") {
+        showToast('Invlaid Email or Password', 'error');
+      } else if (errorCode === 'auth/network-request-failed') {
+        showToast('Network error. Please check your connection.', 'error');
+      } else {
+        showToast(`Error: ${errorMessage}`, 'error');
+      }
+    }
+};
 
   return (
     <View style={styles?.mainContainer}>
@@ -18,6 +55,7 @@ export default function login() {
         style={styles?.emailPasswordInputs}
         placeholder="Enter your registered email" 
         placeholderTextColor="#7e7e7e"
+        onChangeText={(value) => setEmail(value)}
         />
       </View>
 
@@ -27,11 +65,15 @@ export default function login() {
         style={styles?.emailPasswordInputs} 
         secureTextEntry={true}
         placeholder="Enter your password" 
-        placeholderTextColor="#7e7e7e" 
+        placeholderTextColor="#7e7e7e"
+        onChangeText={(value) => setPassword(value)}
         />
       </View>
 
-      <TouchableOpacity style={[styles?.button, { backgroundColor: Colors.ORANGE }]}>
+      <TouchableOpacity 
+      style={[styles?.button, { backgroundColor: Colors.ORANGE }]}
+      onPress={OnLoginClick}
+      >
         <Text style={styles?.buttonText}>Login</Text>
       </TouchableOpacity>
 
