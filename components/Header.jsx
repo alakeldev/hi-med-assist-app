@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   helloImage: {
     width: 50,
     height: 50,
-    marginTop: 10,
+    marginTop: 25,
   },
   usernameText: {
     fontSize: 18,
