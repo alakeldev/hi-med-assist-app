@@ -2,15 +2,15 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import React, { useState } from 'react'
 import Colors from '../../Constants/Colors'
 import { useRouter } from 'expo-router'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { signInWithEmailAndPassword } from "firebase/auth"
 import Toast from 'react-native-toast-message'
+import { auth } from '../../FirebaseConfig'
 
 export default function login() {
 
   const router = useRouter();
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-  const auth = getAuth();
   const showToast = (message, type = 'success') => {
     Toast.show({
       type: type,
