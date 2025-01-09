@@ -6,6 +6,7 @@ import { auth } from '../../FirebaseConfig';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import Toast from 'react-native-toast-message';
 import { Checkbox } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Register() {
   const router = useRouter();
@@ -42,8 +43,10 @@ export default function Register() {
 
       await updateProfile(user, {
         displayName: username
-      })
+      });
 
+      await AsyncStorage.setItem('username', username);
+      
       router.push("(tabs)");
     } catch (error) {
       const errorCode = error.code;

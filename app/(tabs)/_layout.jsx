@@ -1,9 +1,10 @@
-import { View, Text } from 'react-native'
+import { View, Text } from 'react-native';
 import React, { useEffect, useState } from 'react'
 import { Tabs, useRouter } from 'expo-router';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../FirebaseConfig';
+import Colors from '../../Constants/Colors';
 
 
 export default function TabLayout() {
@@ -27,7 +28,9 @@ export default function TabLayout() {
 
   return (
     <Tabs screenOptions={{
-        headerShown: false
+        headerShown: false,
+        tabBarActiveTintColor: Colors.ORANGE,
+        tabBarInactiveTintColor: Colors.LOGIN,
     }}>
         <Tabs.Screen name='index' 
         options={{
