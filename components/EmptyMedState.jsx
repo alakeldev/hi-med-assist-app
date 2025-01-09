@@ -1,8 +1,11 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Colors from '../Constants/Colors';
+import { useRouter } from 'expo-router';
 
 export default function EmptyMedState() {
+    const router = useRouter()
+
   return (
     <View style={styles.mainContainer}>
         <Image 
@@ -12,7 +15,7 @@ export default function EmptyMedState() {
         <Text style={styles.emptyText}>No Medications Found</Text>
         <Text style={styles.emptySubText}>Please add your medications to stay on track with your health</Text>
 
-        <TouchableOpacity style={styles.addNewMedBtn}>
+        <TouchableOpacity style={styles.addNewMedBtn} onPress={() => router.push("/new-med")}>
             <Text style={styles.btnText}>+ Add New Medication</Text>
         </TouchableOpacity>
     </View>
