@@ -14,12 +14,21 @@ export default function login() {
 
       <View style={styles?.viewInputs}>
         <Text style={styles?.emailPasswordLabels}>Email</Text>
-        <TextInput placeholder='Email' style={styles?.emailPasswordInputs}></TextInput>
+        <TextInput 
+        style={styles?.emailPasswordInputs}
+        placeholder="Enter your registered email" 
+        placeholderTextColor="#7e7e7e"
+        />
       </View>
 
       <View style={styles?.viewInputs}>
         <Text style={styles?.emailPasswordLabels}>Password</Text>
-        <TextInput placeholder='Password' style={styles?.emailPasswordInputs} secureTextEntry={true}></TextInput>
+        <TextInput 
+        style={styles?.emailPasswordInputs} 
+        secureTextEntry={true}
+        placeholder="Enter your password" 
+        placeholderTextColor="#7e7e7e" 
+        />
       </View>
 
       <TouchableOpacity style={[styles?.button, { backgroundColor: Colors.ORANGE }]}>

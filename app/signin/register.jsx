@@ -5,11 +5,14 @@ import { useRouter } from 'expo-router';
 import { auth } from '../../FirebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import Toast from 'react-native-toast-message';
+import { Checkbox } from 'react-native-paper';
 
 export default function Register() {
   const router = useRouter();
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isChecked, setIsChecked] = useState(false);
 
   const showToast = (message, type = 'success') => {
     Toast.show({
@@ -22,8 +25,13 @@ export default function Register() {
   };
 
   const OnCreateAccount = async () => {
-    if (!email || !password) {
-      showToast('Please fill in both email and password.', 'error');
+    if (!email || !password || !username) {
+      showToast('Please fill username, email and password.', 'error');
+      return;
+    }
+
+    if (!isChecked) {
+      showToast('Please agree to the terms and conditions.', 'error');
       return;
     }
 
@@ -31,7 +39,6 @@ export default function Register() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       showToast('Account created successfully!');
-      
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -50,12 +57,18 @@ export default function Register() {
       <Text style={styles.loginMainHeader}>Create New Account</Text>
       <View style={styles.viewInputs}>
         <Text style={styles.emailPasswordLabels}>Username</Text>
-        <TextInput placeholder="Username" style={styles.emailPasswordInputs} />
+        <TextInput 
+          placeholder="Please enter your username" 
+          placeholderTextColor="#7e7e7e" 
+          style={styles.emailPasswordInputs} 
+          onChangeText={(value) => {setUsername(value)}}
+        />
       </View>
       <View style={styles.viewInputs}>
         <Text style={styles.emailPasswordLabels}>Email</Text>
         <TextInput
-          placeholder="Email"
+          placeholder="Please enter your email address"
+          placeholderTextColor="#7e7e7e"
           style={styles.emailPasswordInputs}
           onChangeText={(value) => setEmail(value)}
         />
@@ -64,11 +77,24 @@ export default function Register() {
       <View style={styles.viewInputs}>
         <Text style={styles.emailPasswordLabels}>Password</Text>
         <TextInput
-          placeholder="Password"
+          placeholder="Please enter your password"
+          placeholderTextColor="#7e7e7e"
           style={styles.emailPasswordInputs}
           secureTextEntry={true}
           onChangeText={(value) => setPassword(value)}
         />
+      </View>
+
+      <View style={styles.checkboxContainer}>
+        <View style={styles.checkboxBackground}>
+          <Checkbox
+            status={isChecked ? 'checked' : 'unchecked'}
+            onPress={() => setIsChecked(!isChecked)}
+            color="white"
+            uncheckedColor="white"
+          />
+        </View>
+        <Text style={styles.checkboxLabel}>I agree to the terms and conditions</Text>
       </View>
 
       <TouchableOpacity
@@ -112,6 +138,20 @@ const styles = StyleSheet.create({
     marginTop: 5,
     minWidth: '80%',
     backgroundColor: Colors.MAIN,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 30,
+  },
+  checkboxBackground: {
+    backgroundColor: Colors.ORANGE,
+    padding: 2,
+    borderRadius: 5,
+  },
+  checkboxLabel: {
+    marginLeft: 10,
+    color: Colors.MAIN,
   },
   button: {
     padding: 20,
