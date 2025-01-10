@@ -1,10 +1,13 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Modal, FlatList, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Modal, FlatList, ScrollView, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import Colors from '../Constants/Colors';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { db } from "../FirebaseConfig";
+import { doc, setDoc } from 'firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AddNewMedForm() {
 
@@ -13,6 +16,15 @@ export default function AddNewMedForm() {
   const [datePickerMode, setDatePickerMode] = useState(null);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [showTimingModal, setShowTimingModal] = useState(false);
+  const [userEmail, setUserEmail] = useState(null);
+
+  useEffect(() => {
+    const fetchUserEmail = async () => {
+      const email = await AsyncStorage.getItem('userEmail');
+      setUserEmail(email);
+    };
+    fetchUserEmail();
+  }, []);
 
   const onHandleInputChange = (inputField, inputValue) => {
     setData(prevValue => ({
@@ -74,6 +86,27 @@ export default function AddNewMedForm() {
     const formattedHours = hours % 12 || 12;
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     return `${formattedHours}:${formattedMinutes} ${ampm}`;
+  };
+
+  const SaveMedication = async () => {
+    const docId = Date.now().toString();
+
+    if (!(data?.name && data?.dosage && data?.startDate && data?.endDate && data?.timeReminder)) {
+      Alert.alert("All fields are required!");
+      return;
+    }
+
+    try {
+      await setDoc(doc(db, "Medicine", docId), {
+        ...data,
+        userEmail: userEmail,
+        docId: docId,
+      });
+      Alert.alert("Medication saved successfully!");
+    } catch (e) {
+      console.log(e);
+      Alert.alert("Failed to save medication.");
+    }
   };
 
   return (
@@ -168,6 +201,10 @@ export default function AddNewMedForm() {
         onConfirm={handleDateChange}
         onCancel={() => setShowDatePicker(false)}
       />
+
+      <TouchableOpacity style={styles.addBtn} onPress={SaveMedication}>
+        <Text style={styles.addBtnText}>Add New Medicine</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -197,7 +234,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     fontSize: 15,
   },
-  inputIcon: {
+    inputIcon: {
     color: Colors.LOGIN,
     borderRightWidth: 1,
     paddingRight: 10,
@@ -251,5 +288,18 @@ const styles = StyleSheet.create({
   dateInputGroup: {
     flexDirection: "row",
     gap: 3
+  },
+  addBtn: {
+    padding: 20,
+    backgroundColor: Colors.ORANGE,
+    borderRadius: 20,
+    marginTop: 40,
+    minWidth: "80%",
+    marginBottom: 30
+  },
+  addBtnText: {
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 18
   }
 });

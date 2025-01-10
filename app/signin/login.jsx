@@ -37,6 +37,11 @@ export default function Login() {
         await AsyncStorage.setItem('username', username);
       }
 
+      const userEmail = user.email; 
+      if (userEmail) { 
+        await AsyncStorage.setItem('userEmail', userEmail); 
+      }
+
       router.replace('/(tabs)');
     } catch (error) {
       const errorCode = error.code;
