@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
   },
   emailPasswordLabels: {
     color: Colors.MAIN,
-    textAlign: "center",
   },
   emailPasswordInputs: {
     borderWidth: 1,
