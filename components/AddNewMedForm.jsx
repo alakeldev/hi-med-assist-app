@@ -90,6 +90,19 @@ export default function AddNewMedForm() {
     return `${formattedHours}:${formattedMinutes} ${ampm}`;
   };
 
+  const calculateDateRange = (startDate, endDate) => {
+    const start = new Date(startDate.split('.').reverse().join('-'));
+    const end = new Date(endDate.split('.').reverse().join('-'));
+    const dateArray = [];
+    let currentDate = start;
+
+    while (currentDate <= end) {
+      dateArray.push(formatDate(new Date(currentDate)));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dateArray;
+  };
+
   const SaveMedication = async () => {
     const docId = Date.now().toString();
 
@@ -98,11 +111,14 @@ export default function AddNewMedForm() {
       return;
     }
 
+    const dateRange = calculateDateRange(data.startDate, data.endDate);
+
     try {
       await setDoc(doc(db, "Medicine", docId), {
         ...data,
         userEmail: userEmail,
         docId: docId,
+        dateRange: dateRange,
       });
       Alert.alert("Medication saved successfully!");
       router.push("(tabs)");
@@ -237,7 +253,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     fontSize: 15,
   },
-    inputIcon: {
+  inputIcon: {
     color: Colors.LOGIN,
     borderRightWidth: 1,
     paddingRight: 10,
