@@ -8,9 +8,11 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { db } from "../FirebaseConfig";
 import { doc, setDoc } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
 
 export default function AddNewMedForm() {
 
+  const router = useRouter();
   const [data, setData] = useState({});
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [datePickerMode, setDatePickerMode] = useState(null);
@@ -103,6 +105,7 @@ export default function AddNewMedForm() {
         docId: docId,
       });
       Alert.alert("Medication saved successfully!");
+      router.push("(tabs)");
     } catch (e) {
       console.log(e);
       Alert.alert("Failed to save medication.");
