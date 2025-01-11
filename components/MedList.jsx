@@ -6,20 +6,38 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Colors from './../Constants/Colors';
 import moment from 'moment';
 import MedCard from './MedCard';
+import EmptyMedState from './EmptyMedState'
+import { useRouter } from 'expo-router';
 
 export default function MedList() {
 
+  const router = useRouter()
   const [medList, setMedList] = useState([]);
   const [dateRange, setDateRange] = useState([]);
   const [selDate, setSelDate] = useState(moment().format("DD.MM.YYYY"));
+  const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
+    GetUserEmail();
     GetDateRangeList();
   }, [])
 
   useEffect(() => {
-    GetMedList(selDate);
-  }, [selDate]);
+    if (userEmail) {
+      GetMedList(selDate);
+    }
+  }, [selDate, userEmail]);
+
+  const GetUserEmail = async () => {
+    try {
+      const email = await AsyncStorage.getItem('userEmail');
+      if (email !== null) {
+        setUserEmail(email);
+      }
+    } catch (error) {
+      console.log('Error retrieving user email:', error);
+    }
+  }
 
   const GetDateRangeToDisplay = () => {
     const dateList = [];
@@ -41,15 +59,14 @@ export default function MedList() {
   }
 
   const GetMedList = async (selDate) => {
-    const user = await AsyncStorage.getItem('userEmail');
     try {
       const q = query(collection(db, "Medicine"), 
-      where("userEmail", "==", user),
+      where("userEmail", "==", userEmail),
       where("dateRange", "array-contains", selDate))
 
-      const queryShot = await getDocs(q);
+      const querySnapshot = await getDocs(q);
       setMedList([]);
-      queryShot.forEach((doc) => {
+      querySnapshot.forEach((doc) => {
         setMedList(prev => [...prev, doc.data()])
       })
     } catch (e) {
@@ -68,7 +85,7 @@ export default function MedList() {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <TouchableOpacity 
-            style={[styles.dateContainer, { backgroundColor: item === selDate ? Colors.ORANGE : Colors.MAIN }]} 
+            style={[styles.dateContainer, { backgroundColor: item === selDate ? Colors.MAIN : Colors.ORANGE }]} 
             onPress={() => setSelDate(item)}
           >
             <Text style={styles.eachDay}>{item}</Text>
@@ -76,12 +93,14 @@ export default function MedList() {
         )}
       />
 
-      <FlatList 
+    {medList?.length > 0 ? <FlatList 
         data={medList}
         renderItem={({ item, index }) => (
-          <MedCard med={item} />
+          <TouchableOpacity onPress={() => router.push("/action-modal")}>
+            <MedCard med={item} />
+          </TouchableOpacity>
         )}
-      />
+      /> : <EmptyMedState />}
     </View>
   );
 }
@@ -99,7 +118,7 @@ const styles = StyleSheet.create({
   },
   dateContainer: {
     padding: 15,
-    backgroundColor: Colors.MAIN,
+    backgroundColor: Colors.ORANGE,
     display: "flex",
     alignItems: "center",
     marginRight: 20,

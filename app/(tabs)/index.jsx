@@ -1,17 +1,22 @@
-import { View, Text, Button, StyleSheet } from 'react-native'
+import { View, Text, Button, StyleSheet, ScrollView, FlatList } from 'react-native'
 import React from 'react'
 import Colors from '../../Constants/Colors'
 import Header from '../../components/Header'
-import EmptyMedState from '../../components/EmptyMedState'
 import MedList from '../../components/MedList'
 
 export default function index() {
   return (
-    <View style={styles.mainContainer}>
-      <Header />
-      {/* <EmptyMedState /> */}
-      <MedList />
-    </View>
+    <FlatList 
+    style={{backgroundColor: Colors.LOGIN}}
+    data={[]}
+    ListHeaderComponent={
+      <View style={styles.mainContainer}>
+        <Header />
+        <MedList />
+      </View>
+    }>
+      
+    </FlatList>
   )
 }
 

@@ -11,6 +11,11 @@ export default function RootLayout() {
         }}> 
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="signin" />
+          <Stack.Screen name="action-modal" 
+          options={{
+            presentation: "modal"
+          }}
+          />
         
         </ Stack>
       </PaperProvider>
