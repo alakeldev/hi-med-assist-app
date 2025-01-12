@@ -50,7 +50,7 @@ export default function TabLayout() {
         />
         <Tabs.Screen name='MyProfile' 
         options={{
-            tabBarLabel: "Account",
+            tabBarLabel: "Me",
             tabBarIcon:({color, size}) => (
                 <MaterialIcons name="tag-faces" size={size} color={color} />
             )

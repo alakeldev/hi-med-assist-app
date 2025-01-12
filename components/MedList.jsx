@@ -78,7 +78,6 @@ export default function MedList() {
     <View style={styles.mainContainer}>
       <Image style={styles.imageHeader} source={require("../assets/images/meds.png")} />
       <FlatList
-        style={{ marginTop: 20 }}
         data={dateRange}
         keyExtractor={(item, index) => index.toString()}
         horizontal

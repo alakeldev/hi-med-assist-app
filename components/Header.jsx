@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
   mainContainer: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: 20,
   },
   helloImage: {
     width: 50,
     height: 50,
-    marginTop: 25,
   },
   usernameText: {
     fontSize: 18,

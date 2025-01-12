@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
   },
   closeModalBtn: {
     position: "absolute",
-    bottom: 40
+    top: 50,
+    left: 30
   }
 })

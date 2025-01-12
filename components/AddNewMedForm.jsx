@@ -9,6 +9,7 @@ import { db } from "../FirebaseConfig";
 import { doc, setDoc } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
+import Toast from 'react-native-toast-message';
 
 export default function AddNewMedForm() {
 
@@ -29,10 +30,19 @@ export default function AddNewMedForm() {
   }, []);
 
   const onHandleInputChange = (inputField, inputValue) => {
-    setData(prevValue => ({
-      ...prevValue,
-      [inputField]: inputValue
-    }));
+    if (inputValue.length > 20) {
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Please enter no more than 20 characters',
+        visibilityTime: 3000,
+      });
+    } else {
+      setData(prevValue => ({
+        ...prevValue,
+        [inputField]: inputValue
+      }));
+    }
   };
 
   const timingOptions = [
@@ -224,6 +234,7 @@ export default function AddNewMedForm() {
       <TouchableOpacity style={styles.addBtn} onPress={SaveMedication}>
         <Text style={styles.addBtnText}>Add New Medicine</Text>
       </TouchableOpacity>
+      <Toast />
     </ScrollView>
   );
 }
