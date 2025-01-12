@@ -96,7 +96,13 @@ export default function MedList() {
     {medList?.length > 0 ? <FlatList 
         data={medList}
         renderItem={({ item, index }) => (
-          <TouchableOpacity onPress={() => router.push("/action-modal")}>
+          <TouchableOpacity onPress={() => router.push({
+            pathname: "/action-modal",
+            params: {
+              ...item,
+              selDate: selDate
+            }
+          })}>
             <MedCard med={item} />
           </TouchableOpacity>
         )}
