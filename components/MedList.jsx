@@ -103,7 +103,7 @@ export default function MedList() {
               selDate: selDate
             }
           })}>
-            <MedCard med={item} />
+            <MedCard med={item} selDate={selDate} />
           </TouchableOpacity>
         )}
       /> : <EmptyMedState />}
