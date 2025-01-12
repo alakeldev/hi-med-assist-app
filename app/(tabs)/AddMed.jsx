@@ -1,9 +1,11 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View } from 'react-native';
+import React from 'react';
 import NewMed from '../new-med';
 
 export default function AddMed() {
   return (
-    <NewMed />
+    <View>
+      <NewMed />
+    </View>
   )
 }

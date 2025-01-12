@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
-import AddNewMedHeader from '../../components/AddNewMedHeader'
+import { View, StyleSheet } from 'react-native';
+import React from 'react';
+import AddNewMedHeader from '../../components/AddNewMedHeader';
 import Colors from '../../Constants/Colors';
 import AddNewMedForm from '../../components/AddNewMedForm';
 

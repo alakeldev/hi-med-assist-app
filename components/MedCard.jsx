@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import Colors from '../Constants/Colors'
+import { View, Text, StyleSheet, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import Colors from '../Constants/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -14,9 +14,7 @@ export default function MedCard({ med, selDate = "" }) {
   }, [med, selDate]);
 
   const checkMedStatus = () => {
-    // Ensure med.action is defined and is an array
     const data = Array.isArray(med?.action) ? med.action.find((item) => item.date == selDate) : null;
-    console.log("--", data);
     setMedStatus(data);
   }
 

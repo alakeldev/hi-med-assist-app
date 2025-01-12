@@ -1,5 +1,4 @@
-import { View, Text } from 'react-native';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Tabs, useRouter } from 'expo-router';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { onAuthStateChanged } from 'firebase/auth';

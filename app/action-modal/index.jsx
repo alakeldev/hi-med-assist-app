@@ -1,13 +1,13 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
-import React from 'react'
-import { useRouter, useLocalSearchParams } from "expo-router"
-import Colors from '../../Constants/Colors'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
+import React from 'react';
+import { useRouter, useLocalSearchParams } from "expo-router";
+import Colors from '../../Constants/Colors';
 import MedCard from '../../components/MedCard';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { db } from "./../../FirebaseConfig";
-import { collection, query, where, getDocs, updateDoc, doc, setDoc, arrayUnion } from 'firebase/firestore';
+import { updateDoc, doc, arrayUnion } from 'firebase/firestore';
 import moment from 'moment';
 
 
